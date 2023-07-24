@@ -20,9 +20,6 @@ function displayPhotos() {
   // run function for each object in photosArray
 
   photosArray.forEach((photo) => {
-    // create <a> to link to unsplash
-    console.log(photo);
-
     const item = document.createElement("a");
     setAttributes(item, {
       href: photo.links.html,
@@ -39,7 +36,6 @@ function displayPhotos() {
     // put <img> inside <a>, then put both inside imageContainer element
     item.appendChild(img);
     imageContainer.appendChild(item);
-    console.log(imageContainer);
   });
 }
 // Get photos from Unsplash API
@@ -51,5 +47,15 @@ async function getPhotos() {
   } catch (error) {}
 }
 
+// check to see if scrolling is near bottom of page, load more photos
+window.addEventListener("scroll", () => {
+  if (
+    window.innerHeight + window.scrollY >=
+    document.body.offsetHeight - 1000
+  ) {
+    getPhotos();
+    console.log("near bottom");
+  }
+});
 // on load
 getPhotos();
